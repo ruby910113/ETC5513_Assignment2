@@ -1,0 +1,150 @@
+---
+title: "Git and GitHub Command Line Workflow Guide"
+subtitle: "ETC5513 Assignment 1"
+author: "Ting-Ting, Wu 35717343"
+format: 
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+  pdf:
+    toc: true
+execute: 
+  echo: true
+  warning: false
+  message: false
+  error: false
+---
+
+### Step 1 - Create RStudio Project and Example QMD File
+
+1. Create a New Folder called `5513_TingTing_35717343_A2`
+
+2. In RStudio, create a new project inside that existing folder and name it `ETC5513_Assignment2`.  
+
+3. In this folder, create a file named `example.qmd` with the following content:  
+
+```r
+---
+title: "example"
+format: html
+---
+
+## Introduction
+
+This is a simple Quarto file.
+```
+
+4. Click Render to knit it into a HTML file.
+
+5. You can view the result [here](example.html)
+
+### Step 2 - Create a Git Repository and Clone It Locally
+
+1. Create a new GitHub repository  
+
+    Go to GitHub and create a new repository called `ETC5513_Assignment2`.
+  
+2. Link your existing RStudio Project folder to the remote repository  
+
+    Cloning is used when you want to copy a GitHub repository into a new local folder.  
+    However, since we already created the project folder locally, we don't need to clone it.  
+    Instead, open the Terminal in your RStudio project (or interface/Git Bash) and run the following commands to initialize version control and connect it to GitHub:
+
+```r
+git init
+git remote add origin https://github.com/ruby910113/ETC5513_Assignment2.git
+```
+
+3. Stage, commit, and push your files  
+
+    Ensure that example.qmd and example.html are saved and present in the folder, then run:
+
+```r
+git add .
+git commit -m "Initial commit: Add example.qmd and rendered HTML"
+git push origin master
+```
+
+### Step 3 - Create testbranch and Make Changes
+
+1. Create and switch to a new branch
+
+```r
+git branch testbranch
+git switch testbranch
+```
+
+2. Modify the Quarto file  
+
+    Open example.qmd and add the following line under the "Introduction" section:
+
+```r
+This line was added in testbranch to demonstrate branching.
+```
+  
+3. Stage and commit the change  
+
+    1. Save the file
+
+    2. Go to the Terminal/interface/Git Bash and run:
+  
+```r
+git add example.qmd
+git commit -m "Edit example.qmd in testbranch"
+```
+
+4. Push the branch to GitHub
+
+```r
+git push origin testbranch
+```
+
+After pushing, you can go to your GitHub repo and confirm that testbranch is now listed, and your changes to example.qmd appear in that branch.
+  
+```{r}
+#| fig-cap: "Screenshot showing the testbranch is active with a new commit for editing example.qmd."
+#| out.width: "70%"
+knitr::include_graphics("Image folder/create_branch.png")
+```
+
+5. Create a data folder and add Assignment 1 data
+
+6. Stage, commit, and push the data folder
+
+```r
+git add data
+git commit -m "Add Assignment 1 data to data folder"
+git push origin testbranch
+```
+
+**Why Use Git Branches?**
+
+Git branches are an important part of working together and safe coding. They let you work on new features, fix problems, or try new ideas without changing the main project.
+
+When you make a new branch, it's like making a copy of your project as it is now. You can then make changes, save them, and test them freely. If everything works well, you can combine your branch back into the main branch. If not, you can remove the branch without hurting your original work.
+
+This is very helpful when many people are working on different parts of a project at the same time. Branching stops work from getting mixed up and lets each person work on their own.
+
+### Step 4 – Add a Data Folder and Commit Assignment 1 Data
+
+1. Amend the previous commit
+
+    Instead of creating a new commit, we will amend the previous one to include this new content. This allows us to "edit" our most recent commit by adding files we forgot earlier.
+    
+```r
+git commit --amend
+```
+Git will open your default text editor. You can either keep the original commit message, or update it
+
+```r
+Edit example.qmd in testbranch and add Assignment 1 data
+```
+
+If you enter Vim mode when amending a commit, you can press Insert and edit the commit message, then press Esc and type:
+
+```r
+:wq
+```
+
+2. Push the amended commit to GitHub
